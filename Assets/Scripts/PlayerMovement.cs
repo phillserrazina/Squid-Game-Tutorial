@@ -11,4 +11,16 @@ public class PlayerMovement : CharacterMovement
 
         animator.SetFloat("Speed", verticalDirection);
     }
+
+    public override void Die()
+    {
+        base.Die();
+        Debug.Log("Trigger death menu");
+    }
+
+    public override void Win()
+    {
+        base.Win();
+        Debug.Log("Trigger win menu");
+    }
 }

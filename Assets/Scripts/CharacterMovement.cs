@@ -24,4 +24,18 @@ public class CharacterMovement : MonoBehaviour
     {
         return rb.velocity.magnitude > 0.1f;
     }
+
+    public virtual void Die()
+    {
+        // Play death animation
+        // Stop moving
+        Debug.Log(name + " has died!");
+    }
+
+    public virtual void Win()
+    {
+        // Stop moving
+        // Make invulnerable
+        Debug.Log(name + " has won!");
+    }
 }

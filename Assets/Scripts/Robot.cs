@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 enum RobotStates { Counting, Inspecting }
 
@@ -19,12 +20,12 @@ public class Robot : MonoBehaviour
     public OnStopCountingDelegate OnStopCounting;
 
     private Animator animator;
-    private PlayerMovement player;
+    private List<CharacterMovement> characters = new List<CharacterMovement>();
 
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerMovement>();
+        characters = FindObjectsOfType<CharacterMovement>().ToList();
         animator = GetComponentInChildren<Animator>();
 
         currentInspectionTime = startInspectionTime;
@@ -33,8 +34,13 @@ public class Robot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player != null)
-            StateMachine();
+        if (characters == null)
+            return;
+        
+        if (characters.Count <= 0)
+            return;
+
+        StateMachine();
     }
 
     private void StateMachine()
@@ -68,9 +74,20 @@ public class Robot : MonoBehaviour
         {
             currentInspectionTime -= Time.deltaTime;
 
-            if (player.IsMoving())
+            var charsToRemove = new List<CharacterMovement>();
+
+            foreach (var character in characters)
             {
-                Destroy(player.gameObject);
+                if (character.IsMoving())
+                {
+                    charsToRemove.Add(character);
+                }
+            }
+
+            foreach (var character in charsToRemove)
+            {
+                characters.Remove(character);
+                character.Die();
             }
         }
         else
