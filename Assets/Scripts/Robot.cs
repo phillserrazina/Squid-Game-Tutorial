@@ -78,7 +78,7 @@ public class Robot : MonoBehaviour
 
             foreach (var character in characters)
             {
-                if (character.IsMoving())
+                if (character.IsMoving() && character.IsInvulnerable == false)
                 {
                     charsToRemove.Add(character);
                 }

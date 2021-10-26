@@ -15,12 +15,12 @@ public class PlayerMovement : CharacterMovement
     public override void Die()
     {
         base.Die();
-        Debug.Log("Trigger death menu");
+        UIManager.Instance.TriggerLoseMenu();
     }
 
     public override void Win()
     {
         base.Win();
-        Debug.Log("Trigger win menu");
+        UIManager.Instance.TriggerWinMenu();
     }
 }
