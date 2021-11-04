@@ -9,7 +9,9 @@ public class PlayerMovement : CharacterMovement
         verticalDirection = Input.GetAxis("Vertical");
         verticalDirection = Mathf.Clamp(verticalDirection, 0, 1);
 
-        animator.SetFloat("Speed", verticalDirection);
+        sprintValue = Input.GetAxis("Sprint");
+
+        animator.SetFloat("Speed", verticalDirection + sprintValue);
     }
 
     public override void Die()
